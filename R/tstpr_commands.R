@@ -187,7 +187,7 @@ tstp_get <- function(con,
 
     colnames(data) <- c("index","data")
     if (performance) print(paste(lubridate::now(), " as.POSIXct")); 
-    index  <-  as.POSIXct(data$index, format = "%Y-%m-%dT%H:%M:%SZ", tz = "GMT")
+    index  <-  as.POSIXct(data$index, format = "%Y-%m-%dT%H:%M:%SZ", tz = "Etc/GMT-1")
     if (performance) print(paste(lubridate::now(), " as.numeric")); 
     data <- as.numeric(data$data)
     if (performance) print(paste(lubridate::now(), " xts")); 
@@ -861,7 +861,7 @@ tstp_getversion <- function(con, xts) {
 #' @export
 #' @author Dominik Leutnant
 tstp_setvalue <- function(con, tsid, defart=c("K","I","M"), reihenart=c("Z","R"), value=NA, 
-                          from=NULL, to=NULL, by="mins", tz="GMT") {
+                          from=NULL, to=NULL, by="mins", tz="Etc/GMT-1") {
   
   # create xts object with NA's
   time <- seq(as.POSIXct(from, tz = tz), as.POSIXct(to, tz = tz), by)
@@ -1175,7 +1175,7 @@ tstp_setvalue <- function(con, tsid, defart=c("K","I","M"), reihenart=c("Z","R")
     }
   }
   
-  dt <- as.POSIXct(index.tmp, format = "%Y-%m-%d %H:%M:%S", tz = "GMT")
+  dt <- as.POSIXct(index.tmp, format = "%Y-%m-%d %H:%M:%S", tz = "Etc/GMT-1")
   ts <- xts::xts(x = text.tmp, order.by = dt)
   
   return(ts)
@@ -1202,7 +1202,7 @@ tstp_setvalue <- function(con, tsid, defart=c("K","I","M"), reihenart=c("Z","R")
                 function(x) {.ByteArrayToDouble(rev(as.raw(x)),4)}
   )
   dt <- paste0(jahr,"-",monat,"-",tag, " ", std, ":", min, ":", sek)
-  dt <- as.POSIXct(dt, format = "%Y-%m-%d %H:%M:%S", tz = "GMT")
+  dt <- as.POSIXct(dt, format = "%Y-%m-%d %H:%M:%S", tz = "Etc/GMT-1")
   ts <- xts::xts(x = dbl, order.by = dt)
   return(ts)
 }
